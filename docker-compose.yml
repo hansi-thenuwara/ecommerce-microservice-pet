@@ -3,7 +3,7 @@ services:
   product-service:
     image: product-service
     build:
-      context: ./product-service
+      context: ../product-service
       dockerfile: Dockerfile
     ports:
       - "8080-8080"
@@ -15,7 +15,7 @@ services:
   order-service:
     image: order-service
     build:
-      context: ./order-service
+      context: ../order-service
       dockerfile: Dockerfile
     ports:
       - "8081-8081"
