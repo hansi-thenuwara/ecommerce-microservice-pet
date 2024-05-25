@@ -14,6 +14,8 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379
+      - MANAGEMENT_ENDPOINT_WEB_EXPOSURE_INCLUDE=health, info, prometheus
+      - MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED=true
   order-service:
     image: order-service
     build:
@@ -28,7 +30,19 @@ services:
       - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.H2Dialect
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=health, info, prometheus
+      - MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED=true
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
